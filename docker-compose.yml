@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  app:
+    build: .docker
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - db
+    working_dir: /var/www/html
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api/:/var/www/html
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
